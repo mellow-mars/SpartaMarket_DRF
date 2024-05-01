@@ -9,7 +9,6 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
 class UserAPIView(APIView):
 
     def post(self, request):
-        self.permission_classes = [AllowAny]
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
@@ -21,4 +20,15 @@ class UserAPIView(APIView):
         if user.username == username:
             serializer = UserSerializer(user)
             return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
+    
+    def put(self, request, username):
+
+        user = request.user
+        if user.username == username:
+            serializer = UserSerializer(
+                user, data=request.data, partial=True)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+                return Response(serializer.data)
         return Response(status=status.HTTP_401_UNAUTHORIZED)
