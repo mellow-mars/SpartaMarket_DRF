@@ -1,3 +1,4 @@
+from pickle import NONE
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -5,19 +6,25 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from .serializers import ProductSerializer
 from .models import Product
 from rest_framework import status
-
+# from django.core.paginator import Paginator
+from rest_framework.pagination import PageNumberPagination
 
 class ProductListAPIView(APIView):
 
     permission_classes = [
         IsAuthenticatedOrReadOnly
     ]
-    def get_object(self,product_id):
+
+    def get_object(self, product_id):
         return get_object_or_404(Product, id=product_id)
-    
+
     def get(self, request):
+        paginator = PageNumberPagination()
+        paginator.page_size = 6
+
         post = Product.objects.all()
-        serializer = ProductSerializer(post, many=True)
+        page = paginator.paginate_queryset(post, request)
+        serializer = ProductSerializer(page, many=True)
         return Response(serializer.data)
 
     def post(self, request):
