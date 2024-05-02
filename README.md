@@ -9,8 +9,7 @@
 ---
 
 ## ERD
-![Untitled (4)](https://github.com/mellow-mars/spartamarket/assets/142032967/4b353525-969b-489b-bb33-f428a40e131d)
-
+![alt text](<Untitled (5).png>)
 ---
 
 ## 주요기능/API 명세
@@ -46,7 +45,7 @@
 * 로그아웃
     * Endpoint:/api/accounts/logout/
     * Method:POST
-![image](https://github.com/mellow-mars/spartamarket/assets/142032967/83eb16e5-fbef-4ca0-9cd9-6d986c4529e7)
+![alt text](image.png)
 
 * 프로필 페이지
     * Endpoint:/api/accounts/<str:username>/
