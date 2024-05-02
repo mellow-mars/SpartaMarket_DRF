@@ -6,8 +6,8 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from .serializers import ProductSerializer
 from .models import Product
 from rest_framework import status
-# from django.core.paginator import Paginator
 from rest_framework.pagination import PageNumberPagination
+
 
 class ProductListAPIView(APIView):
 
