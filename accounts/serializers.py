@@ -26,14 +26,14 @@ class UserSerializer(serializers.ModelSerializer):
         return value
     
 
-class UserMethodsSerializer(serializers.ModelSerializer):
+class UserAuthenticationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
         fields = ('password',)
 
 
-class PasswordSerializer(UserMethodsSerializer):
+class PasswordChangeSerializer(UserAuthenticationSerializer):
     def validate(self, data):
         new_password = data.get('password')
         validate_password(new_password)

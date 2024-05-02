@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
-from .serializers import PasswordSerializer, UserSerializer, UserMethodsSerializer
+from .serializers import PasswordChangeSerializer, UserSerializer, UserAuthenticationSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from .models import User
@@ -39,7 +39,7 @@ class PasswordChangeAPIView(APIView):
     def put(self, request):
         user = get_object_or_404(User, username=request.user.username)
         if request.user.username == user.username:
-            serializer = PasswordSerializer(
+            serializer = PasswordChangeSerializer(
                 user, data=request.data, partial=True)
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
@@ -49,7 +49,7 @@ class PasswordChangeAPIView(APIView):
 
 class UserDeleteAPIView(APIView):
     def delete(self, request):
-        serializer = UserMethodsSerializer(data=request.data)
+        serializer = UserAuthenticationSerializer(data=request.data)
         if serializer.is_valid():
             password = serializer.validated_data['password']
             user = request.user
